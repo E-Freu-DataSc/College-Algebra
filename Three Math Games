@@ -1,0 +1,111 @@
+import matplotlib.pyplot as plt
+import random
+import numpy as np
+
+# Juego de gráfico de dispersión
+def juego_dispersion():
+    # Generar puntos aleatorios
+    x = random.randint(-10, 10)
+    y = random.randint(-10, 10)
+
+    # Crear el gráfico
+    plt.figure(figsize=(8, 8))
+    plt.scatter(x, y, color='red')
+    plt.xlim(-20, 20)
+    plt.ylim(-20, 20)
+    plt.grid(True)
+    plt.title('Adivina las coordenadas del punto')
+    plt.show()
+
+    # Solicitar la entrada del jugador
+    respuesta_x = int(input(f"¿Cuál es el valor de x para el punto? "))
+    respuesta_y = int(input(f"¿Cuál es el valor de y para el punto? "))
+
+    # Verificar la respuesta
+    if respuesta_x == x and respuesta_y == y:
+        print("¡Correcto!")
+    else:
+        print(f"Incorrecto. El punto era ({x}, {y}).")
+
+
+# Juego de práctica de álgebra
+def generar_ecuacion():
+    # Generar valores aleatorios para la ecuación
+    a = random.randint(1, 10)
+    b = random.randint(-10, 10)
+    c = random.randint(-10, 10)
+    tipo = random.choice([1, 2])  # 1: un paso, 2: dos pasos
+
+    if tipo == 1:
+        # Un paso: ax + b = c
+        print(f"Resuelve: {a}x + {b} = {c}")
+        respuesta = (c - b) / a
+    else:
+        # Dos pasos: ax + b = c -> ax = c - b -> x = (c - b) / a
+        print(f"Resuelve: {a}x + {b} = {c}")
+        respuesta = (c - b) / a
+
+    # Solicitar respuesta al jugador
+    jugador_respuesta = float(input("Respuesta: "))
+    
+    if jugador_respuesta == respuesta:
+        print("¡Correcto!")
+    else:
+        print(f"Incorrecto. La respuesta correcta era {respuesta}.")
+
+
+# Juego de proyectiles
+def juego_proyectil():
+    # Generar altura y ubicación del muro
+    muro_x = random.randint(5, 15)
+    muro_altura = random.randint(5, 15)
+
+    print(f"El muro está en x = {muro_x} y tiene una altura de {muro_altura}.")
+
+    # Ajuste de la parábola (coeficientes de la ecuación cuadrática)
+    a = float(input("Introduce el coeficiente a para la parábola: "))
+    b = float(input("Introduce el coeficiente b para la parábola: "))
+    c = float(input("Introduce el coeficiente c para la parábola: "))
+
+    # Generar puntos de la parábola
+    x_vals = np.linspace(0, 20, 100)
+    y_vals = a * x_vals**2 + b * x_vals + c
+
+    # Graficar el proyectil y el muro
+    plt.plot(x_vals, y_vals, label="Camino del proyectil")
+    plt.axvline(x=muro_x, color='r', label=f'Muro en x={muro_x}')
+    plt.axhline(y=muro_altura, color='g', linestyle='--', label=f'Altura del muro = {muro_altura}')
+    plt.xlabel('Distancia (x)')
+    plt.ylabel('Altura (y)')
+    plt.title('Juego de Proyectil')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    # Comprobar si la parábola salta el muro
+    if a * muro_x**2 + b * muro_x + c > muro_altura:
+        print("¡Has superado el muro!")
+    else:
+        print(f"El proyectil no supera el muro. Intenta ajustando los coeficientes.")
+
+
+# Función principal para elegir el juego
+def main():
+    print("Elige un juego:")
+    print("1. Juego de dispersión")
+    print("2. Juego de álgebra")
+    print("3. Juego de proyectil")
+    opcion = input("Opción: ")
+
+    if opcion == "1":
+        juego_dispersion()
+    elif opcion == "2":
+        generar_ecuacion()
+    elif opcion == "3":
+        juego_proyectil()
+    else:
+        print("Opción no válida.")
+
+
+# Ejecutar el juego
+main()
