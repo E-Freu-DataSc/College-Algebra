@@ -1,0 +1,44 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Función para cargar el archivo CSV desde tres opciones
+def cargar_datos(opcion, ruta=None, url=None):
+    if opcion == 1:  # Cargar desde archivo local
+        return pd.read_csv(ruta)
+    elif opcion == 2:  # Cargar desde URL proporcionada por el usuario
+        return pd.read_csv(url)
+    elif opcion == 3:  # Cargar desde URL en el código
+        url_fija = 'https://example.com/datos.csv'  # URL predeterminada
+        return pd.read_csv(url_fija)
+
+# Cargar datos (opción 1: archivo local, 2: URL usuario, 3: URL código)
+# Cambiar la opción y la ruta o URL según sea necesario
+opcion = 1  # Cambiar según el caso
+ruta = 'ruta/a/tu/archivo.csv'  # Solo si opción es 1
+url = None  # Solo si opción es 2
+
+df = cargar_datos(opcion, ruta, url)
+
+# Mostrar encabezados y las primeras dos filas
+print("Encabezados del DataFrame:")
+print(df.columns)
+print("\nPrimeras dos filas:")
+print(df.head(2))
+
+# Guardar nombres de columnas como lista
+columnas = list(df.columns)
+
+# Seleccionar una o dos columnas para convertir a arreglos Numpy
+columna1 = 'columna_ejemplo_1'  # Cambiar según el nombre de tu columna
+columna2 = 'columna_ejemplo_2'  # Cambiar si se elige una segunda columna
+numpy_array1 = np.array(df[columna1])
+numpy_array2 = np.array(df[columna2])
+
+# Graficar los datos seleccionados
+plt.figure(figsize=(10, 6))
+plt.scatter(numpy_array1, numpy_array2)  # Para gráfico de dispersión
+plt.title(f'Gráfico de {columna1} vs {columna2}')
+plt.xlabel(columna1)
+plt.ylabel(columna2)
+plt.show()
