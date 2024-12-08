@@ -1,0 +1,99 @@
+import math
+
+class CalculadoraFinanciera:
+    
+    def __init__(self):
+        pass
+    
+    def calcular_aniidad(self, pago, tasa, periodos, tipo='mensual'):
+        """
+        Calcula el valor presente de una anualidad.
+        :param pago: Pago periódico
+        :param tasa: Tasa de interés
+        :param periodos: Número de períodos
+        :param tipo: 'mensual' o 'continuo'
+        :return: Valor presente de la anualidad
+        """
+        if tipo == 'mensual':
+            return pago * ((1 - (1 + tasa)**-periodos) / tasa)
+        elif tipo == 'continuo':
+            return pago * ((1 - math.exp(-tasa * periodos)) / tasa)
+        else:
+            raise ValueError("Tipo no válido. Use 'mensual' o 'continuo'.")
+
+    def calcular_pago_hipotecario(self, principal, tasa, periodos):
+        """
+        Calcula el pago mensual de una hipoteca.
+        :param principal: Monto del préstamo
+        :param tasa: Tasa de interés mensual
+        :param periodos: Número de pagos mensuales
+        :return: Pago mensual
+        """
+        return principal * tasa / (1 - (1 + tasa)**-periodos)
+
+    def estimar_balance_inversion(self, principal, tasa, periodos):
+        """
+        Estima el balance de una inversión para el retiro.
+        :param principal: Monto inicial de inversión
+        :param tasa: Tasa de rendimiento anual
+        :param periodos: Número de años
+        :return: Balance final de la inversión
+        """
+        return principal * (1 + tasa) ** periodos
+
+    def tiempo_para_doblar(self, tasa):
+        """
+        Estima cuántos años tardará en duplicarse una inversión.
+        :param tasa: Tasa de interés anual
+        :return: Tiempo en años para que el capital se duplique
+        """
+        return math.log(2) / math.log(1 + tasa)
+
+    def resolver_ecuacion_logaritmica(self, base, resultado):
+        """
+        Resuelve una ecuación logarítmica: log(base) de resultado.
+        :param base: Base del logaritmo
+        :param resultado: Resultado de la ecuación
+        :return: Valor de x en la ecuación log(base) x = resultado
+        """
+        return math.log(resultado, base)
+
+    def convertir_notacion_cientifica(self, numero):
+        """
+        Convierte un número a notación científica.
+        :param numero: Número a convertir
+        :return: Número en notación científica
+        """
+        return f"{numero:.2e}"
+
+    def de_notacion_cientifica(self, numero):
+        """
+        Convierte un número de notación científica a número decimal.
+        :param numero: Número en notación científica
+        :return: Número en formato decimal
+        """
+        return float(numero)
+
+# Ejemplo de uso
+calc = CalculadoraFinanciera()
+
+# Ejemplo de calcular anualidad con crecimiento mensual
+print(calc.calcular_aniidad(500, 0.05, 12, tipo='mensual'))
+
+# Ejemplo de calcular pago hipotecario
+print(calc.calcular_pago_hipotecario(200000, 0.0035, 360))
+
+# Estimar balance de inversión para el retiro
+print(calc.estimar_balance_inversion(100000, 0.07, 30))
+
+# Calcular el tiempo para duplicar una inversión
+print(calc.tiempo_para_doblar(0.05))
+
+# Resolver una ecuación logarítmica
+print(calc.resolver_ecuacion_logaritmica(10, 1000))
+
+# Convertir a notación científica
+print(calc.convertir_notacion_cientifica(1234567))
+
+# Convertir de notación científica
+print(calc.de_notacion_cientifica('1.23e+06'))
