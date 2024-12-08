@@ -1,0 +1,87 @@
+from fractions import Fraction
+import math
+
+# Funciones del calculador
+def solve_proportion(a, b, c):
+    """Resuelve la proporción a/b = c/x."""
+    return (b * c) / a if b != 0 else "Error: División por cero."
+
+def solve_linear_equation(a, b):
+    """Resuelve la ecuación ax + b = 0."""
+    return -b / a if a != 0 else "Error: No hay solución (a no puede ser cero)."
+
+def factor_square_root(n):
+    """Devuelve la raíz cuadrada de n."""
+    return math.sqrt(n) if n >= 0 else "Error: No se puede calcular la raíz cuadrada de un número negativo."
+
+def decimal_to_frac_and_percent(decimal):
+    """Convierte un decimal a fracción y porcentaje."""
+    return f"Fracción: {Fraction(decimal).limit_denominator()}, Porcentaje: {decimal * 100}%"
+
+def frac_to_decimal_and_percent(fraction):
+    """Convierte una fracción a decimal y porcentaje."""
+    decimal = float(fraction)
+    return f"Decimal: {decimal}, Porcentaje: {decimal * 100}%"
+
+def percent_to_decimal_and_frac(percent):
+    """Convierte un porcentaje a decimal y fracción."""
+    decimal = percent / 100
+    return f"Decimal: {decimal}, Fracción: {Fraction(decimal).limit_denominator()}"
+
+def circle_area(radius):
+    """Calcula el área de un círculo."""
+    return math.pi * radius ** 2 if radius >= 0 else "Error: El radio no puede ser negativo."
+
+# Menú principal
+def menu():
+    opciones = {
+        1: ('Resolver proporciones (a/b = c/x)', solve_proportion),
+        2: ('Resolver x en ecuaciones (ax + b = 0)', solve_linear_equation),
+        3: ('Calcular raíz cuadrada', factor_square_root),
+        4: ('Convertir decimales a fracciones y porcentajes', decimal_to_frac_and_percent),
+        5: ('Convertir fracciones a decimales y porcentajes', frac_to_decimal_and_percent),
+        6: ('Convertir porcentajes a decimales y fracciones', percent_to_decimal_and_frac),
+        7: ('Calcular área de un círculo', circle_area),
+    }
+    
+    while True:
+        print("\n--- Calculadora Multi-Función ---")
+        for key, (desc, _) in opciones.items():
+            print(f"{key}. {desc}")
+        print("8. Salir")
+        
+        try:
+            opcion = int(input("\nElige una opción: "))
+            if opcion == 8:
+                print("¡Adiós!")
+                break
+            if opcion in opciones:
+                funcion = opciones[opcion][1]
+                if opcion == 1:  # Resolver proporción
+                    a, b, c = map(float, input("Ingresa a, b, c (separados por espacio): ").split())
+                    print(f"x = {funcion(a, b, c)}")
+                elif opcion == 2:  # Resolver ecuación
+                    a, b = map(float, input("Ingresa a, b (separados por espacio): ").split())
+                    print(f"x = {funcion(a, b)}")
+                elif opcion == 3:  # Raíz cuadrada
+                    n = float(input("Ingresa un número: "))
+                    print(f"Raíz cuadrada = {funcion(n)}")
+                elif opcion == 4:  # Convertir decimal
+                    decimal = float(input("Ingresa un decimal: "))
+                    print(funcion(decimal))
+                elif opcion == 5:  # Convertir fracción
+                    fraccion = Fraction(input("Ingresa una fracción (ej. 1/2): "))
+                    print(funcion(fraccion))
+                elif opcion == 6:  # Convertir porcentaje
+                    percent = float(input("Ingresa un porcentaje: "))
+                    print(funcion(percent))
+                elif opcion == 7:  # Área de círculo
+                    radius = float(input("Ingresa el radio del círculo: "))
+                    print(f"Área = {funcion(radius):.2f} unidades cuadradas")
+            else:
+                print("Opción no válida, por favor elige otra.")
+        except ValueError:
+            print("Entrada no válida, por favor ingresa valores numéricos.")
+
+# Ejecutar la calculadora
+menu()
